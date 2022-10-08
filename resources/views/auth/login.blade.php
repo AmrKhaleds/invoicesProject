@@ -73,6 +73,9 @@
 @endsection --}}
 
 @extends('layouts.auth.app')
+@section('title')
+    تسجيل الدخول
+@endsection
 @section('content')
 	<div class="limiter">
 		<div class="container-login100">
@@ -87,7 +90,7 @@
 					</span>
 
 					<div class="wrap-input100">
-					<input id="email" type="email" class="form-control input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="الإيميل">
+					<input id="email" type="email" class="form-control input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="الإيميل" style="background: #e6e6e6;border: none;">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -95,7 +98,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-					<input id="password" type="password" class="form-control input100 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="الرقم السرى">
+					<input id="password" type="password" class="form-control input100 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="الرقم السرى" style="background: #e6e6e6;border: none;">
 
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">

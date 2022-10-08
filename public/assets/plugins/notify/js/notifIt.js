@@ -100,7 +100,7 @@
             fade: 0,
             bgcolor: "",
             color: "",
-            timeout: 5000,
+            timeout: 2000,
             zindex: null,
             offset: 0,
             callback: null,

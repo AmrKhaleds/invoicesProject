@@ -21506,7 +21506,8 @@ object, embed, video {
     padding-right: 31px; }
 
 .app-sidebar .slide.active .side-menu__item {
-  background: transparent; }
+  background: transparent; 
+}
 
 .app-sidebar__user .user-pro-body {
   display: block;

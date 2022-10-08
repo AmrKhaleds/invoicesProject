@@ -52,7 +52,8 @@ function not6() {
 function not7() {
 	notif({
 		msg: "<b>Success:</b> Well done Details Submitted Successfully",
-		type: "success"
+		type: "success",
+		time: 2000
 	});
 }
 

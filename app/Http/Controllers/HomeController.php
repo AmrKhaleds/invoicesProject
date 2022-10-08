@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Intervention\Image\Image;
 
 use Illuminate\Http\Request;
 

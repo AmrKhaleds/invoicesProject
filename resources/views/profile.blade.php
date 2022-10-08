@@ -46,7 +46,11 @@
 								<div class="pl-0">
 									<div class="main-profile-overview">
 										<div class="main-img-user profile-user">
-											<img alt="" src="{{URL::asset('assets/img/faces/6.jpg')}}"><a class="fas fa-camera profile-edit" href="JavaScript:void(0);"></a>
+											<img alt="" src="{{ asset('assets/img') ."/". auth()->user()->avatar;}}">	
+												<a class="fas fa-camera profile-edit" href="JavaScript:void(0);" id="upload_link"></a>
+												<input type="file" id="upload" name="img" accept="image/*" style="display: none;">
+
+
 										</div>
 										<div class="d-flex justify-content-between mg-b-20">
 											<div>
