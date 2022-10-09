@@ -193,7 +193,6 @@
                             <form action="factories/destroy" method="POST">
                                 {{ method_field('delete')}}
                                 @csrf
-                                <input type="hidden" class="form-control" id="id" name="id"> {{-- we must make input hidden for passing id to js and then to FactoryContrllor --}}
                                 <div class="form-group">
                                     {{-- <label for="factory_name">اسم المصنع</label> --}}
                                     <input type="hidden" name="id" id="id" value="">

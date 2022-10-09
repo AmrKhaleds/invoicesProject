@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\FactoriesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', [HomeController::class, 'index']);
     Route::resource('profile', UserController::class);
+    Route::resource('clients', ClientsController::class);
     
     Route::resource('invoices', InvoicesController::class);
     Route::resource('factories', FactoriesController::class);
