@@ -6,8 +6,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\FactoriesController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ProductsController;
 
 
 /*
@@ -29,11 +30,16 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', [HomeController::class, 'index']);
-    Route::resource('profile', UserController::class);
-    Route::resource('clients', ClientsController::class);
-    
-    Route::resource('invoices', InvoicesController::class);
-    Route::resource('factories', FactoriesController::class);
+    Route::put('profile/infoUpdate/{id}', [ProfileController::class , 'infoUpdate']);
+    Route::put('profile/passUpdate/{id}', [ProfileController::class , 'passUpdate']);
+    // Route resources grouping
+    Route::resources([
+        'clients' => ClientsController::class,
+        'products' => ProductsController::class,
+        'invoices' => InvoicesController::class,
+        'factories' => FactoriesController::class,
+        'profile' => ProfileController::class,
+    ]);
     Route::get('/{page}', [AdminController::class, 'index']);
 });
 

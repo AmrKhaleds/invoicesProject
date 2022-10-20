@@ -33,19 +33,19 @@
 								<div class="pl-0">
 									<div class="main-profile-overview">
 										<div class="main-img-user profile-user">
-											<img alt="" src="{{URL::asset('assets/img/faces/6.jpg')}}">
+											<img alt="" src="{{URL::asset('assets/img') . './' . $user->profile->avatar;}}">
 											{{-- <a class="" href="JavaScript:void(0);"></a> --}}
 											<a class="fas fa-camera profile-edit modal-effect" data-effect="effect-scale" data-toggle="modal" href="#avatarmodal"></a>
 										</div>
 										<div class="d-flex justify-content-between mg-b-20">
 											<div>
-												<h5 class="main-profile-name">{{auth()->user()->name;}}</h5>
-												<p class="main-profile-name-text">{{auth()->user()->email;}}</p>
+												<h5 class="main-profile-name">{{$user->name;}}</h5>
+												<p class="main-profile-name-text">{{$user->email;}}</p>
 											</div>
 										</div>
 										<h6>السيرة الذاتية</h6>
 										<div class="main-profile-bio">
-											{{auth()->user()->bio}}<a href="">More</a>
+											{{$user->profile->bio}}<a href="">More</a>
 										</div><!-- main-profile-bio -->
 										{{-- <hr class="mg-y-30"> --}}
 
@@ -66,7 +66,7 @@
 										<div class="media-body">
 											<span>التلفون</span>
 											<div>
-												<a href="tel:{{auth()->user()->phone}}">{{auth()->user()->phone}}</a>
+												<a href="tel:{{$user->profile->phone}}">{{$user->profile->phone}}</a>
 											</div>
 										</div>
 									</div>
@@ -77,7 +77,7 @@
 										<div class="media-body">
 											<span>الموقع</span>
 											<div>
-												<a href="https://{{auth()->user()->website}}" target="_blank" rel="noopener noreferrer">{{auth()->user()->website}}</a>
+												<a href="{{$user->profile->website}}" target="_blank" rel="noopener noreferrer">{{$user->profile->website}}</a>
 											</div>
 										</div>
 									</div>
@@ -88,7 +88,7 @@
 										<div class="media-body">
 											<span>العنوان الحالى</span>
 											<div>
-												{{auth()->user()->address}}
+												{{$user->profile->address}}
 											</div>
 										</div>
 									</div>
@@ -101,29 +101,79 @@
 					<div class="col-lg-8">
 						<div class="card">
 							<div class="card-body">
+									{{-- If there any errors --}}
+								@if ($errors->any())
+									@foreach ( $errors->all() as $error )
+										<div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: flex; justify-content: center;">
+											<strong>{{ $error }}</strong>
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+									@endforeach
+								@endif
+								{{-- If there any Add --}}
+								@if (session()->has('Update'))
+									<div class="alert alert-success alert-dismissible fade show" role="alert" style="display: flex; justify-content: center;">
+										<strong>{{ session()->get('Update') }}</strong>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								@endif
+								{{-- If there any Add --}}
+								@if (session()->has('Error'))
+									<div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: flex; justify-content: center;">
+										<strong>{{ session()->get('Error') }}</strong>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								@endif
+								{{-- Main Settings --}}
 								<div class="mb-4 main-content-label">المعلومات الشخصية</div>
-								<form id="profile" class="form-horizontal" action="" method="POST">
-                                    {{ method_field('put')}}
-									@csrf
-
-									<div class="mb-4 main-content-label">عام</div>
+								<form id="info" class="form-horizontal" action="{{ url('profile/infoUpdate/' . auth()->user()->id) }}" method="POST">
+									{{ method_field('put')}}
+									@csrf	
 									<div class="form-group ">
 										<div class="row">
 											<div class="col-md-3">
 												<label class="form-label" for="name">اسم المستخدم</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="name"  placeholder="اسم المستخدم" value="{{auth()->user()->name}}">
+												<input type="text" class="form-control" name="name"  placeholder="اسم المستخدم" value="{{$user->name}}">
 											</div>
 										</div>
 									</div>
 									<div class="form-group ">
 										<div class="row">
 											<div class="col-md-3">
+												<label class="form-label" for="email">الإيميل<i> (required)</i></label>
+											</div>
+											<div class="col-md-9">
+												<input type="text" class="form-control"  name="email"  placeholder="الإيميل" value="{{$user->email}}">
+											</div>
+										</div>
+									</div>
+									<div class="form-group text-left">
+										<button type="submit" form="info" class="btn btn-primary waves-effect waves-light">تحديث المعلومات الشخصية</button>
+									</div>
+								</form>
+							</div>
+
+							{{-- Profile Settings --}}
+							<div class="card-body">
+								<div class="mb-4 main-content-label">الملف الشخصي</div>
+								<form id="profile" class="form-horizontal" action="{{ url('profile/'.  auth()->user()->id ) }}" method="POST">
+                                    {{ method_field('put')}}
+									@csrf						
+									<div class="form-group ">
+										<div class="row">
+											<div class="col-md-3">
 												<label class="form-label" for="first_name">الأسم الأول</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="first_name"  placeholder="الأسم الأول" value="{{auth()->user()->first_name}}">
+												<input type="text" class="form-control" name="first_name"  placeholder="الأسم الأول" value="{{$user->profile->first_name}}">
 											</div>
 										</div>
 									</div>
@@ -133,7 +183,7 @@
 												<label class="form-label" for="last_name">الأسم الأخير</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="last_name"  placeholder="الأسم الأخير" value="{{auth()->user()->last_name}}">
+												<input type="text" class="form-control" name="last_name"  placeholder="الأسم الأخير" value="{{$user->profile->last_name}}">
 											</div>
 										</div>
 									</div>
@@ -143,28 +193,19 @@
 												<label class="form-label" for="designation">المنصب</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="designation"  placeholder="السيرة الذاتية" value="{{auth()->user()->designation}}">
+												<input type="text" class="form-control" name="designation"  placeholder="السيرة الذاتية" value="{{$user->profile->designation}}">
 											</div>
 										</div>
 									</div>
-									<div class="mb-4 main-content-label">معلومات الاتصال</div>
-									<div class="form-group ">
-										<div class="row">
-											<div class="col-md-3">
-												<label class="form-label" for="email">الإيميل<i> (required)</i></label>
-											</div>
-											<div class="col-md-9">
-												<input type="text" class="form-control"  name="email"  placeholder="الإيميل" value="{{auth()->user()->email}}">
-											</div>
-										</div>
-									</div>
+									<div class="mb-4 main-content-label">معلومات التواصل</div>
+									
 									<div class="form-group ">
 										<div class="row">
 											<div class="col-md-3">
 												<label class="form-label" for="website">الموقع</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="website"  placeholder="الموقع" value="{{auth()->user()->website}}">
+												<input type="text" class="form-control" name="website"  placeholder="الموقع" value="{{$user->profile->website}}">
 											</div>
 										</div>
 									</div>
@@ -174,7 +215,7 @@
 												<label class="form-label" for="phone">التلفون</label>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" name="phone"  placeholder="التلفون" value="{{auth()->user()->phone}}">
+												<input type="text" class="form-control" name="phone"  placeholder="التلفون" value="{{$user->profile->phone}}">
 											</div>
 										</div>
 									</div>
@@ -184,7 +225,7 @@
 												<label class="form-label" for="address">العنوان</label>
 											</div>
 											<div class="col-md-9">
-												<textarea class="form-control"  name="address" rows="2"  placeholder="العنوان">{{auth()->user()->address}}</textarea>
+												<textarea class="form-control"  name="address" rows="2"  placeholder="العنوان">{{$user->profile->address}}</textarea>
 											</div>
 										</div>
 									</div>
@@ -195,14 +236,52 @@
 												<label class="form-label" for="bio">السيرة الذاتية</label>
 											</div>
 											<div class="col-md-9">
-												<textarea class="form-control" name="bio" rows="4" placeholder="" value="">{{auth()->user()->bio}}</textarea>
+												<textarea class="form-control" name="bio" rows="4" placeholder="" value="">{{$user->profile->bio}}</textarea>
 											</div>
 										</div>
 									</div>
+									<div class="form-group text-left">
+										<button type="submit" form="profile" class="btn btn-primary waves-effect waves-light">تحديث الملف الشخصى</button>
+									</div>
 								</form>
 							</div>
-							<div class="card-footer text-left">
-								<button type="submit" form="profile" class="btn btn-primary waves-effect waves-light">تحديث الملف الشخصى</button>
+
+							{{-- Change Password --}}
+							<div class="card-body">
+								<div class="mb-4 main-content-label">كلمة المرور</div>
+								<form id="password" class="form-horizontal" action="{{ url('profile/passUpdate/' . auth()->user()->id) }}" method="POST">
+                                    {{ method_field('put')}}
+									@csrf						
+									<div class="form-group ">
+										<div class="row">
+											<div class="col-md-3">
+												<label class="form-label" for="currentPass">كلمة المرور الحالية</label>
+											</div>
+											<div class="col-md-9">
+												<input type="password" class="form-control" name="currentPass"  placeholder="كلمة المرور الحالية" required>
+											</div>
+										</div>
+									</div>
+									<div class="form-group ">
+										<div class="row">
+											<div class="col">
+												<label class="form-label" for="password">كلمة المرور الجديد</label>
+											</div>
+											<div class="col">
+												<input type="password" class="form-control" name="password"  placeholder="كلمة المرور الجديد" required>
+											</div>
+											<div class="col">
+												<label class="form-label" for="password_confirmation">أعد إدخال كلمة المرور</label>
+											</div>
+											<div class="col">
+												<input type="password" class="form-control" name="password_confirmation"  placeholder="أعد إدخال كلمة المرور" required>
+											</div>
+										</div>
+									</div>
+									<div class="form-group text-left">
+										<button type="submit" form="password" class="btn btn-primary waves-effect waves-light">تحديث كلمة المرور</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
+
+use App\Models\Products;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.profile',compact('users'));
+        return view('products.index');
     }
 
     /**
@@ -35,16 +35,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Products $products)
     {
         //
     }
@@ -52,10 +52,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Products $products)
     {
         //
     }
@@ -64,34 +64,21 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Products $products)
     {
-        User::where('id',"=", $id)
-            ->update([
-                'name' => $request->name,
-                'first_name'=> $request->first_name,
-                'last_name'=> $request->last_name,
-                'designation'=> $request->designation,
-                'email'=> $request->email,
-                'website'=> $request->website,
-                'phone'=> $request->phone,
-                'address'=> $request->address,
-                'bio'=> $request->bio,
-        ]);
-        return redirect('profile');
-        // return $request;
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Products $products)
     {
         //
     }
