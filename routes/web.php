@@ -35,7 +35,6 @@ Route::group(['middleware' => 'auth'], function() {
     // Route resources grouping
     Route::resources([
         'clients' => ClientsController::class,
-        'products' => ProductsController::class,
         'invoices' => InvoicesController::class,
         'factories' => FactoriesController::class,
         'profile' => ProfileController::class,

@@ -15,7 +15,7 @@ class FactoriesController extends Controller
     public function index()
     {   
         $factories = factories::all();
-        return view('factories.factories', compact('factories'));
+        return view('factories.index', compact('factories'));
     }
 
     /**
